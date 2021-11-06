@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<main>
+    <div class="form_wrapper">
+        <form action="{{ url_for('views.profile') }}" method="POST" class="login_form">
+            <h3>Edit profile</h3>
+            <input type="email" name="email" id="email" placeholder="Email">
+            <input type="text" name="username" id="username" placeholder="Username">
+            <input type="password" name="password" id="password" placeholder="Password">
+            <input type="text" name="titles" id="titles" placeholder="Favorite titles">
+            <input type="submit" value="Save" id="login_submit">
+        </form>
+    </div>
+</main>
+{% endblock %}

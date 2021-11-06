@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<main>
+    <div class="control_panel">
+        <form action="{{ url_for('views.index') }}" method="POST" id="search_form">
+            <div>
+                <input type="text" placeholder="Search..." name="search" id="search" maxlength="100">
+                <input type="submit" value="Search" id="submit">
+            </div>
+
+            <div>
+                <label for="reverse">Reverse order:</label>
+                <input type="checkbox" name="reverse" id="reverse" value="reverse">
+
+                <label for="sort_by">Sort by:</label>
+                <select name="sort_by" id="sort_by" form="search_form">
+                    <option value="age">Age</option>
+                    <option value="last_active">Last Active</option>
+                </select>
+            </div>
+        </form>
+
+        <a href="{{ url_for('views.create_thread') }}" class="new_button">New thread</a>
+    </div>
+
+    {% for item in threads %}
+        <div class="thread">
+            <div>
+                <a href="{{ url_for('views.thread', thread_id=item.id) }}" class="header_link">{{item.name}}</a>
+                <h5 class="last_active">Last active: {{item.last_active.date().isoformat()}}</h5>
+            </div>
+
+            <div>
+                <img src="{{item.creator.avatar(30)}}" alt="Ava" class="author_avatar">
+                <h3>{{item.creator.username}}</h3>
+                <h5>{{item.created_at.date().isoformat()}}</h5>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if prev_url %}
+        <a href="{{ prev_url }}"> < </a>
+        {% endif %}
+        {% if next_url %}
+        <a href="{{ next_url }}"> > </a>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

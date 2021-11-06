@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Thread{{thread.id}}{% endblock %}
+
+{% block content %}
+<main>
+    <div class="control_panel_thread">
+        <div class="left">
+            <h3>{{thread.name}}</h3>
+            <p>Created by {{thread.creator.username}} {{thread.created_at.date().isoformat()}}</p>
+        </div>
+        <div class="right">
+            {{replies}} replies
+        </div>
+    </div>
+
+    {% for item in posts %}
+        <div class="post">
+            <div class="author">
+                <img src="{{item.user.avatar(80)}}" alt="Ava" class="author_avatar">
+                <h3>{{item.user.username}}</h3>
+            </div>
+
+            <div class="content">
+                <p class="posted_time">Posted {{item.created_at.date().isoformat()}} at {{ item.created_at.time().strftime('%H:%M:%S') }}</p>
+                <p class="post_content">{{item.content}}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if prev_url %}
+        <a href="{{ prev_url }}"> < </a>
+        {% endif %}
+        {% if next_url %}
+        <a href="{{ next_url }}"> > </a>
+        {% endif %}
+    </div>
+
+    {% if current_user.is_authenticated %}
+    <form action="{{ url_for('views.thread', thread_id=thread.id) }}" method="POST" class="send_post_form">
+        <label for="content">Write your reply:</label>
+        <textarea name="content" id="content"></textarea>
+        <input type="submit" class="post_submit" value="Send">
+    </form>
+    {% endif %}
+</main>
+{% endblock %}

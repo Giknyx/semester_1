@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Groups{% endblock %}
+
+{% block content %}
+<main>
+    <div class="control_panel">
+        <form action="{{ url_for('views.groups') }}" method="POST" id="search_form">
+            <div>
+                <input type="text" placeholder="Search..." name="search" id="search" maxlength="100">
+                <input type="submit" value="Search" id="submit">
+            </div>
+
+            <div>
+                <label for="reverse">Reverse order:</label>
+                <input type="checkbox" name="reverse" id="reverse" value="reverse">
+
+                <label for="sort_by">Sort by:</label>
+                <select name="sort_by" id="sort_by" form="search_form">
+                    <option value="age">Age</option>
+                    <option value="last_active">Last Active</option>
+                </select>
+            </div>
+        </form>
+
+        <a href="{{ url_for('views.create_group') }}" class="new_button">New group</a>
+    </div>
+
+    {% for item in groups %}
+        <div class="group">
+            <div class="group_header">
+                <div class="left">
+                    <img src="{{item.creator.avatar(40)}}" alt="Ava" class="author_avatar">
+                    <div class="group_info">
+                        <a href="{{ url_for('views.group', group_id=item.id) }}" class="header_link">{{item.name}}</a>
+                        {% if item.open_group %}
+                        <span>Open group</span>
+                        {% endif %}
+                        <span>{{item.users|length}} members</span>
+                        <span>Last active: {{item.last_active.date().isoformat()}}</span>
+                    </div>
+                </div>
+                <div class="right">
+                    {{item.thread.posts|length}} replies
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="group_about">
+                {{item.about}}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if prev_url %}
+        <a href="{{ prev_url }}"> < </a>
+        {% endif %}
+        {% if next_url %}
+        <a href="{{ next_url }}"> > </a>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Document{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% block header %}
+<header>
+    <div class="logo_container">
+        <img src="{{ url_for('static', filename='logo.svg') }}" alt="LOGO" class="logo">
+        CrushRoll
+    </div>
+
+    <div class="nav_container">
+        <nav>
+            <a href="{{ url_for('views.index') }}">Home</a>
+            <a href="{{ url_for('views.groups') }}">Groups</a>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('views.profile') }}">Profile</a>
+            {% else %}
+            <a href="{{ url_for('auth.login') }}">Sign in</a>
+            <a href="{{ url_for('auth.register') }}">Sign up</a>
+            {% endif %}
+        </nav>
+
+        {% if current_user.is_authenticated %}
+        <div class="profile_header_container">
+            <img src="{{current_user.avatar(40)}}" alt="Ava">
+            <div class="profile_header_text">
+                <a href="{{ url_for('views.profile') }}" class="profile_header_name">{{current_user.username}}</a>
+                <a href="{{ url_for('auth.logout') }}" class="profile_header_logout">Log out</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<main>
+
+</main>
+{% endblock %}
+
+{% block footer %}
+<footer>
+
+</footer>
+{% endblock %}
+
+</body>
+</html>

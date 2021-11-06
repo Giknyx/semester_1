@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Create_group{% endblock %}
+
+{% block content %}
+<main>
+    <div class="form_wrapper">
+        <form action="{{ url_for('views.create_group') }}" method="POST" class="login_form">
+            <h3>Create group</h3>
+            <input type="text" name="name" id="name" placeholder="Title">
+            <input type="text" name="about" id="about" placeholder="About">
+            <input type="submit" value="Create" id="login_submit">
+        </form>
+    </div>
+</main>
+{% endblock %}

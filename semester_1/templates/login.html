@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<main>
+    <div class="form_wrapper">
+        <form action="{{ url_for('auth.login') }}" method="POST" class="login_form">
+            <h3>Sign in</h3>
+            <input type="text" name="username" id="username" placeholder="Username">
+            <input type="password" name="password" id="password" placeholder="Password">
+            <div class="remember_me">
+                <input type="checkbox" name="remember" id="remember">
+                Remember me
+            </div>
+            <input type="submit" value="Sign in" id="login_submit">
+        </form>
+        <div class="login_signup">
+            <p>Don't have an account?</p>
+            <a href="{{ url_for('auth.register') }}" class="login_link">Sign up</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
